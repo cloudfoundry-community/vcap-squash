@@ -1,4 +1,4 @@
-all : clean test build
+all : clean test build-local
 # .PHONY: all
 
 LDFLAGS += -X "main.buildDate=$(shell date -u '+%Y-%m-%d %H:%M:%S %Z')"
@@ -29,7 +29,9 @@ EXTENSION_windows_amd64=.exe
 print-%: ; @echo $*=$($*)
 
 build-local: clean $(wildcard ../*.go)
-	go build -ldflags '-s -w $(LDFLAGS)' -o $(EXECUTABLE) $(wildcard ../*.go)
+	@echo -n 'Building $(EXECUTABLE) ... '
+	@go build -ldflags '-s -w $(LDFLAGS)' -o $(EXECUTABLE) $(wildcard ../*.go)
+	@echo 'done'
 
 out/%/.built: $(wildcard ../*.go)
 	@echo -n 'Building $(EXECUTABLE)-$(subst _,-,$*)$(EXTENSION_$*) ... '

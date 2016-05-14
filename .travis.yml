@@ -12,6 +12,7 @@ matrix:
   allow_failures:
   - go: tip
 
+before_deploy: "make build"
 deploy:
   provider: releases
   skip_cleanup: true
