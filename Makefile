@@ -32,8 +32,8 @@ build-local: clean $(wildcard ../*.go)
 	go build -ldflags '-s -w $(LDFLAGS)' -o $(EXECUTABLE) $(wildcard ../*.go)
 
 out/%/.built: $(wildcard ../*.go)
-	@echo -n 'Building $*/$(EXECUTABLE)$(EXTENSION_$*) ... '
-	@$(FLAGS_$*) go build -ldflags '-s -w $(LDFLAGS)' -o out/$*/$(EXECUTABLE)$(EXTENSION_$*) $(wildcard ../*.go)
+	@echo -n 'Building $(EXECUTABLE)-$(subst _,-,$*)$(EXTENSION_$*) ... '
+	@$(FLAGS_$*) go build -ldflags '-s -w $(LDFLAGS)' -o out/$(EXECUTABLE)-$(subst _,-,$*)$(EXTENSION_$*) $(wildcard ../*.go)
 	@echo 'done'
 
 build: clean $(foreach PLATFORM,$(PLATFORMS),out/$(PLATFORM)/.built)
