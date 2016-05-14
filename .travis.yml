@@ -14,6 +14,7 @@ matrix:
 
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: EvXaYL5WGZGv7XuAxqcRf0MX18U0RlO7+PRgngTRpQN44O/kDyceJgeDMzLlDHUp2C2QWh7dwZPa/DhywzjdRpp5XZCVhw7knV5PMTfDR8Lzkcc1dELiyE5Wq49QiKQuYfoFlRiYc3OY3RwUMYzDQ+YceRM/fRNTrGoyp+TgpRFlNoU2WHx2hyB9HmxYhWKo0reCt1tcp56ZmkIihBBpKdunOdMGQldfm2WE7UWc4bTwFh98YhjwXFW7w0GIcvg5lFvY+ya+QyJGfViQVy8QgjratbQ6QAimaRmy6RAV7AB9PFTD1dVC7LOR1fWlT2CsWye0JKDKQrmhWGnWaR3xoTkTFyD0HcwmXl1wJe5o+uHaxR0iM4jVm/ci0ae+tg3tXjZovfAnXKkHa2lq0XvhEYikDMuOjO9+kJPOcPeKZNLEkMKEhybRT+vRye/oHKsfwEWKc1CjRHmYV/AvvGIaWjz9VYUBMtambYo1l/BBKMYi76dqgTxufEPitJYxyHF+zw0nONxOM5jFo4xvNj2JbK6gGdLKKskO5gFtc6hUHecBoDtOOaoEaPFlzmwWcrPxYjSxtoJYDoTXAEpZaE1QXni1UETZ2Q5FH1er290TbVP7f2JaTS5AgwUCwZNuPCrVFcwFuTucPsqsk/RS6dxJGRRLPar87JWsJE/pFEI1Bfo=
   file:
@@ -28,5 +29,6 @@ deploy:
   - out/vcap-squash-windows-amd64.exe
   on:
     repo: joshq00/vcap-squash
+    go: 1.6
     tags: true
 
