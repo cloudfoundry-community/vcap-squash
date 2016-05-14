@@ -1,7 +1,10 @@
 language: go
-
 go:
 - 1.6
 - 1.5
 - tip
-
+notifications:
+  email: false
+matrix:
+  allow_failures:
+  - go: tip
