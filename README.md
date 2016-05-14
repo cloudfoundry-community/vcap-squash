@@ -1,6 +1,10 @@
 # vcap-squash [![Build Status](https://travis-ci.org/joshq00/vcap-squash.svg?branch=master)](https://travis-ci.org/joshq00/vcap-squash)
 Turn VCAP_SERVICES into flat env vars
 
+## Download
+Visit the [releases](https://github.com/joshq00/vcap-squash/releases/latest) page
+and download the binary for your system
+
 ## Usage
 This application will parse the `VCAP_SERVICES` environment variable and output the unix exports of the flattened version.
 
