@@ -11,7 +11,7 @@ import (
 var re = regexp.MustCompile("[-.+~`!@#$%^&*(){}\\[\\]:;\"',?<>/]")
 
 func cleanVar(name string) string {
-	return re.ReplaceAllLiteralString(name, "_")
+	return strings.ToUpper(re.ReplaceAllLiteralString(name, "_"))
 }
 
 type envvar struct {
@@ -22,7 +22,6 @@ type envvar struct {
 func (e envvar) String() string {
 	return fmt.Sprintf(`export %s=%s`, e.Key, e.Value)
 }
-
 func flatten(prefix string, vars map[string]interface{}) []envvar {
 	envvars := []envvar{}
 	for key, val := range vars {
@@ -37,7 +36,7 @@ func flatten(prefix string, vars map[string]interface{}) []envvar {
 		default:
 			envvars = append(envvars,
 				envvar{
-					Key:   strings.ToUpper(varname),
+					Key:   varname,
 					Value: fmt.Sprintf("%#v", val),
 				})
 
