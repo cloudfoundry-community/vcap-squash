@@ -59,7 +59,6 @@ var _ = Describe("Main", func() {
 						`export NEST_A_E=1`,
 					)
 				})
-
 			})
 		})
 		Context("with a marketplace service", func() {
@@ -79,6 +78,45 @@ var _ = Describe("Main", func() {
 					`export MY_MYSQL_INSTANCE_PASSWORD="y"`,
 					`export MY_MYSQL_INSTANCE_PORT=1234`,
 				)
+			})
+		})
+		Context("array fields", func() {
+			BeforeEach(func() {
+				vcap = `{ "user-provided": [{
+					"name": "svc",
+					"credentials": {
+						"names": [ "abc", 123 ]
+					}
+				}] }`
+			})
+			It("flattens with index", func() {
+				expected(
+					`export SVC_NAMES_0="abc"`,
+					`export SVC_NAMES_1=123`,
+				)
+			})
+			Context("that contain non-primitives", func() {
+				BeforeEach(func() {
+					vcap = `{ "user-provided": [{
+						"name": "svc",
+						"credentials": {
+							"apps": [ {
+								"name": "app1"
+							}, {
+								"name": "app2",
+								"nested": { "x": "yz" }
+							}, "third" ]
+						}
+					}] }`
+				})
+				It("includes index and field", func() {
+					expected(
+						`export SVC_APPS_0_NAME="app1"`,
+						`export SVC_APPS_1_NAME="app2"`,
+						`export SVC_APPS_1_NESTED_X="yz"`,
+						`export SVC_APPS_2="third"`,
+					)
+				})
 			})
 		})
 	})

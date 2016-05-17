@@ -22,27 +22,37 @@ type envvar struct {
 func (e envvar) String() string {
 	return fmt.Sprintf(`export %s=%s`, e.Key, e.Value)
 }
-func flatten(prefix string, vars map[string]interface{}) []envvar {
-	envvars := []envvar{}
-	for key, val := range vars {
-		varname := cleanVar(prefix + key)
-		switch val.(type) {
-		case map[string]interface{}:
-			envvars = append(envvars,
-				flatten(
-					fmt.Sprintf("%s_", varname),
-					val.(map[string]interface{}))...,
-			)
-		default:
-			envvars = append(envvars,
-				envvar{
-					Key:   varname,
-					Value: fmt.Sprintf("%#v", val),
-				})
 
-		}
+func flattenarr(prefix string, vararr []interface{}) []envvar {
+	envvars := []envvar{}
+	for key, val := range vararr {
+		envvars = append(envvars,
+			flatten(fmt.Sprintf("%s%v", prefix, key), val)...)
 	}
 	return envvars
+}
+
+func flattenmap(prefix string, varmap map[string]interface{}) []envvar {
+	envvars := []envvar{}
+	for key, val := range varmap {
+		envvars = append(envvars,
+			flatten(prefix+key, val)...)
+	}
+	return envvars
+}
+
+func flatten(prefix string, vars interface{}) []envvar {
+	switch vars.(type) {
+	case map[string]interface{}:
+		return flattenmap(prefix+"_", vars.(map[string]interface{}))
+	case []interface{}:
+		return flattenarr(prefix+"_", vars.([]interface{}))
+	default:
+		return []envvar{envvar{
+			Key:   cleanVar(prefix),
+			Value: fmt.Sprintf("%#v", vars),
+		}}
+	}
 }
 
 func Process(vcap string) []string {
@@ -52,7 +62,7 @@ func Process(vcap string) []string {
 
 	for _, instances := range svcs {
 		for _, instance := range instances {
-			for _, cred := range flatten(instance.Name+"_", instance.Credentials) {
+			for _, cred := range flatten(instance.Name, instance.Credentials) {
 				vars = append(vars, cred.String())
 			}
 		}
