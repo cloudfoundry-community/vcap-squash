@@ -1,8 +1,8 @@
-# vcap-squash [![Build Status](https://travis-ci.org/joshq00/vcap-squash.svg?branch=master)](https://travis-ci.org/joshq00/vcap-squash)
+# vcap-squash [![Build Status](https://travis-ci.org/cloudfoundry-community/vcap-squash.svg?branch=master)](https://travis-ci.org/cloudfoundry-community/vcap-squash)
 Turn VCAP_SERVICES into flat env vars
 
 ## Download
-Visit the [releases](https://github.com/joshq00/vcap-squash/releases/latest) page
+Visit the [releases](https://github.com/cloudfoundry-community/vcap-squash/releases/latest) page
 and download the binary for your system
 
 ## Usage
@@ -33,7 +33,7 @@ export MYSERVICE_NESTED_NUMBER=123
 
 To set your environment variables using this output, use
 ```sh
-eval $(./vcap-squash)
+eval "$(./vcap-squash)"
 ```
 
 ### In Cloud Foundry
