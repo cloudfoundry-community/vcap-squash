@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	. "github.com/joshq00/vcap-squash"
+	. "github.com/cloudfoundry-community/vcap-squash"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
